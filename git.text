@@ -43,3 +43,13 @@ git push -u origin master
 
 //Cloning an online repository
 git clone <repository URL>
+
+//New branch
+git checkout -b new-branch-name
+git push --set-upstream new-branch-name
+
+//update branch
+git checkout branch-name
+git add .
+git commit -m "message"
+git push
