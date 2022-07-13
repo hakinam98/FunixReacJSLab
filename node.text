@@ -1,0 +1,18 @@
+//Initializing package.json
+
+npm init
+
+npm install lite-server --save-dev
+
+/Next, open package.json in your editor and modify it as shown below. Note the addition of two lines, line 7 and line 9.
+
+    "start": "npm run lite",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lite": "lite-server"
+
+npm start
+
+//Setting up .gitignore
+/Next, create a file in your project directory named .gitignore (Note: the name starts with a period)Then, add the following to the .gitignore file
+
+node_modulesn
