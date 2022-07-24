@@ -61,8 +61,6 @@ class DishDetail extends Component {
   render() {
     const slecteddish = this.props.selectedDish;
     if (slecteddish != null) {
-      const comments = slecteddish.comments;
-      console.log(comments);
       return (
         <div className="container">
           <div className="row">{this.renderDish(slecteddish)}</div>
