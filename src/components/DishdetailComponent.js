@@ -34,39 +34,42 @@ class DishDetail extends Component {
   }
 
   renderComment(comments) {
-    if (comments != null)
+    if (comments != null) {
+    const comment = comments.map((comment) => {
       return (
-        <div className="col-12 col-md-5 m-1">
-          <h4>Comments</h4>
-          <ul className="list-unstyled">
-            <Stagger in>
-              {comments.map((comment) => {
-                return (
-                  <Fade in key={comment.id}>
-                    <li>
-                      <p>{comment.comment}</p>
-                      <p>
-                        {comment.author} , {comment.date}
-                      </p>
-                    </li>
-                  </Fade>
-                );
-              })}
-            </Stagger>
+        <div>
+          <ul key={comment.id} className="list-unstyled">
+            <li>
+              <p>{comment.comment}</p>
+              <p>
+                -- {comment.author} ,{" "}
+                {new Intl.DateTimeFormat("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "2-digit",
+                }).format(new Date(Date.parse(comment.date)))}
+              </p>
+            </li>
           </ul>
         </div>
       );
+    });
+    return (
+      <div className="col-12 col-md-5 m-1">
+        <h4>Comments</h4>
+        <div>{comment}</div>
+      </div>
+    );
+  } else return <div></div>;
   }
 
   render() {
-    const slecteddish = this.props.selectedDish;
-    if (slecteddish != null) {
-      const comments = slecteddish.comments;
+    if (this.props.this != null) {
       console.log(comments);
       return (
         <div className="container">
-          <div className="row">{this.renderDish(slecteddish)}</div>
-          <div className="row">{this.renderComment()}</div>
+          <div className="row">{this.renderDish(this.props.dish)}</div>
+          <div className="row">{this.renderComment(this.props.dish.comments)}</div>
           <div></div>
         </div>
       );
