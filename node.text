@@ -16,3 +16,7 @@ npm start
 /Next, create a file in your project directory named .gitignore (Note: the name starts with a period)Then, add the following to the .gitignore file
 
 node_modulesn
+
+
+
+npm install redux-form --legacy-peer-deps
