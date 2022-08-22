@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Card,
   CardImg,
@@ -7,9 +7,17 @@ import {
   CardTitle,
   Breadcrumb,
   BreadcrumbItem,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  FormGroup,
 } from "reactstrap";
 
 import { Link } from "react-router-dom";
+
+
+
 
 function RenderDish({ dish }) {
   if (dish != null) {
@@ -83,6 +91,7 @@ const DishDetail = (props) => {
         <div className="row">
           <RenderDish dish={props.dish} />
           <RenderComments comments={props.comments} />
+
         </div>
       </div>
     );
