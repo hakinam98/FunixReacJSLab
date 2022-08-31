@@ -33,8 +33,8 @@ class CommentForm extends Component {
     this.toggleModal = this.toggleModal.bind(this);
   }
   handleSubmit(values) {
-    console.log("Current State is:" + JSON.stringify(values));
-    alert("Current State is:" + JSON.stringify(values));
+    this.toggleModal();
+    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
   }
 
   toggleModal() {
@@ -67,11 +67,11 @@ class CommentForm extends Component {
                 </Control.select>
               </Row>
               <Row className="form-group">
-                <Label htmlFor="yourname">Your Name</Label>
+                <Label htmlFor="author">Your Name</Label>
                 <Control.text
-                  model=".yourname"
-                  id="yourname"
-                  name="yourname"
+                  model=".author"
+                  id="author"
+                  name="author"
                   placeholder="Your Name"
                   className="form-control"
                   validators={{
@@ -79,7 +79,7 @@ class CommentForm extends Component {
                   }}
                 />
                 <Errors className="text-danger"
-                  model=".yourname"
+                  model=".author"
                   show="touched"
                   messages={{
                     required: 'required',
@@ -95,9 +95,7 @@ class CommentForm extends Component {
                   name="comment"
                   rows="8"
                   className="form-control"
-
                 />
-
               </Row>
               <Row className="form-group">
                 <Button type="submit" color="primary">
@@ -136,32 +134,29 @@ function RenderDish({ dish }) {
   }
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
   if (comments != null) {
-    const comment = comments.map((comment) => {
-      return (
-        <div>
-          <ul key={comment.id} className="list-unstyled">
-            <li>
-              <p>{comment.comment}</p>
-              <p>
-                -- {comment.author} ,{" "}
-                {new Intl.DateTimeFormat("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "2-digit",
-                }).format(new Date(Date.parse(comment.date)))}
-              </p>
-            </li>
-          </ul>
-        </div>
-      );
-    });
     return (
       <div className="col-12 col-md-5 m-1">
         <h4>Comments</h4>
-        <div>{comment}</div>
-        <CommentForm />
+        <ul className="list-unstyled">
+          {comments.map((comment) => {
+            return (
+              <li key={comment.id}>
+                <p>{comment.comment}</p>
+                <p>
+                  -- {comment.author} ,{" "}
+                  {new Intl.DateTimeFormat("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "2-digit",
+                  }).format(new Date(Date.parse(comment.date)))}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+        <CommentForm dishId={dishId} addComment={addComment} />
       </div>
     );
   } else return <div></div>;
@@ -185,7 +180,10 @@ const DishDetail = (props) => {
         </div>
         <div className="row">
           <RenderDish dish={props.dish} />
-          <RenderComments comments={props.comments} />
+          <RenderComments comments={props.comments}
+            addComment={props.addComment}
+            dishId={props.dish.id}
+          />
         </div>
       </div>
     );
